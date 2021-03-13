@@ -6,79 +6,40 @@
 /*   By: rtoast <rtoast@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 19:57:32 by kshanti           #+#    #+#             */
-/*   Updated: 2021/03/03 18:20:32 by rtoast           ###   ########.fr       */
+/*   Updated: 2021/03/13 18:57:42 by rtoast           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-int		strsearch(char *line, char *sought)
+void	pars_map(char *line, t_set *tmp)
 {
-	int	res;
-	int	i;
-	int	ii;
-	int	len;
+	int		i;
+	int		valid;
+	int		len;
 
-	res = 0;
-	i = 0;
-	ii = 0;
-	len = ft_strlen(sought);
-	while (line[i] != '\0')
+	i = -1;
+	len = 0;
+	if (line[0] == '\0')
+		tmp->linemap = 2;
+	while (line[++i] != '\0')
 	{
-		if (line[i] == ' ')
-			i++;
-		if (sought[ii] == line[i])
-		{
-			while(sought[ii] != '\0')
-			{
-				if (sought[ii] == line[i])
-				{
-					res++;
-					ii++;
-					i++;
-				}
-				else
-					ii++;
-			}
-		}
-		if (res == len)
-			return(1);
-		i++;
+		valid = valid_symbol(line[i]);
+		if (valid == 0)
+			error("wrong symbol on the map");
+		if (valid == 2 && tmp->play != '0')
+			error("more than one player on the map");
+		if (valid == 2 && ++len && tmp->play == '0')
+			tmp->play = line[i];
+		if (valid == 1)
+			len++;
 	}
-	return (0);
+	if (len > tmp->map_l)
+		tmp->map_l = len;
+	if (tmp->linemap == 2 && line[0] != '\0')
+		error("end line splits map");
 }
 
-int		pars(char *line)
-{
-	int		res;
-	t_set	*tmp;
-
-	tmp = (t_set*)malloc(sizeof(t_set));
-	res = 1;
-	tmp->rx = 0;
-	if (strsearch(line, "R ") == 1)
-	{
-		printf("|%d|\n", pars_R(line, tmp));
-		printf("%d\n", tmp->rx);
-		printf("%d\n", tmp->ry);
-	}
-	// if (strsearch(line, "NO ") == 1)
-	// 	printf("NO \n");
-	// if (strsearch(line, "SO ") == 1)
-	// 	printf("SO \n");
-	// if (strsearch(line, "S ") == 1)
-	// 	printf("S \n");
-	// if (strsearch(line, "WE ") == 1)
-	// 	printf("WE \n");
-	// if (strsearch(line, "EA ") == 1)
-	// 	printf("EA \n");
-	// if (strsearch(line, "C ") == 1)
-	// 	printf("C \n");
-	// if (strsearch(line, "F ") == 1)
-	// 	printf("F \n");
-	free(tmp);
-	return(res);
-}
 int		colstr(char *str)
 {
 	char	*line;
@@ -88,45 +49,89 @@ int		colstr(char *str)
 
 	line = NULL;
 	fd = open(str, O_RDONLY);
+	if (fd < 0)
+		error_system(errno);
 	gnl = 1;
 	numgnl = 0;
 	while (gnl)
 	{
 		gnl = get_next_line(fd, &line);
 		if (gnl == -1)
-			break ;
+			error_system(errno);
 		numgnl++;
-		free (line);
+		free(line);
 	}
 	close(fd);
-	if (gnl == -1)
-		return (-1);
 	return (numgnl);
 }
 
-int		main()
+void	settings(t_set *tmp, int *numgnl, char **line, int fd)
+{
+	int		numset;
+
+	numset = 0;
+	while (numset <= 8 && *numgnl > 0)
+	{
+		if (get_next_line(fd, line) == -1)
+			error_system(errno);
+		if (pars_setting(*line, tmp) == 1)
+			numset++;
+		if (pars_setting(*line, tmp) == 2)
+		{
+			if (numset != 8)
+				error("not all settings");
+			break ;
+		}
+		tmp->mapbegin++;
+		(*numgnl)--;
+		free(*line);
+	}
+	if (*numgnl == 0)
+		error("no map in file");
+}
+
+void	readfile(t_set *tmp)
 {
 	int		numgnl;
-	int		numset;
-	int		ret;
-	char	*line;
-	char	*str;
 	int		fd;
-
+	char	*line;
+	int		i;
 
 	numgnl = colstr("map.cub");
-	numset = 0;
 	line = NULL;
-	str = "map.cub";
-	fd = open(str, O_RDONLY);
-	while (numset <= 8 && numgnl > 0)
+	fd = open("map.cub", O_RDONLY);
+	if (fd < 0)
+		error_system(errno);
+	settings(tmp, &numgnl, &line, fd);
+	pars_map(line, tmp);
+	free(line);
+	while (--numgnl > 0)
 	{
-		get_next_line(fd, &line);
-		ret = pars(line);
-		numset++;
-		numgnl--;
-		free (line);
+		if (get_next_line(fd, &line) == -1)
+			error_system(errno);
+		pars_map(line, tmp);
+		tmp->map_w++;
+		free(line);
 	}
 	close(fd);
+	if (tmp->play == '0')
+		error("no player on the map");
+	array_map("map.cub", tmp, tmp->mapbegin);
+}
+
+int		main(void)
+{
+	t_set	*tmp;
+
+	tmp = (t_set*)malloc(sizeof(t_set));
+	if (tmp == NULL)
+		error_system(errno);
+	tmp->play = '0';
+	tmp->map_l = 0;
+	tmp->linemap = 1;
+	tmp->map_w = 1;
+	tmp->mapbegin = 0;
+	readfile(tmp);
+	free(tmp);
 	return (0);
 }
