@@ -6,7 +6,7 @@
 /*   By: rtoast <rtoast@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 19:57:32 by kshanti           #+#    #+#             */
-/*   Updated: 2021/03/13 18:57:42 by rtoast           ###   ########.fr       */
+/*   Updated: 2021/03/16 02:28:36 by rtoast           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,10 @@ int		main(void)
 	tmp->map_w = 1;
 	tmp->mapbegin = 0;
 	readfile(tmp);
+	init(tmp);
+	mlx_hook(tmp->win, 2, 0, keybord_manager, tmp);
+	mlx_hook(tmp->win, 17, 0, my_exit, NULL);
+	mlx_loop(tmp->mlx);
 	free(tmp);
 	return (0);
 }

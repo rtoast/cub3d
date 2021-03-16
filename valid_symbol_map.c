@@ -6,12 +6,45 @@
 /*   By: rtoast <rtoast@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 17:30:00 by rtoast            #+#    #+#             */
-/*   Updated: 2021/03/13 18:52:15 by rtoast           ###   ########.fr       */
+/*   Updated: 2021/03/16 01:35:09 by rtoast           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
+void	player_valid(t_set *tmp, int i, int j)
+{
+	tmp->player.posx = (double)j + 0.001;
+	tmp->player.posy = (double)i + 0.001;
+	if (tmp->play == 'S')
+	{
+		tmp->player.diry = 1;
+		tmp->player.dirx = 0;
+		tmp->planex = 0.66;
+		tmp->planey = 0;
+	}
+	if (tmp->play == 'N')
+	{
+		tmp->player.diry = -1;
+		tmp->player.dirx = 0;
+		tmp->planex = -0.66;
+		tmp->planey = 0;
+	}
+	if (tmp->play == 'W')
+	{
+		tmp->player.diry = 0;
+		tmp->player.dirx = -1;
+		tmp->planex = 0;
+		tmp->planey = 0.66;
+	}
+	if (tmp->play == 'E')
+	{
+		tmp->player.diry = 0;
+		tmp->player.dirx = 1;
+		tmp->planex = 0;
+		tmp->planey = -0.66;
+	}
+}
 void	valid_symbol_right(t_set *tmp, int i, int j)
 {
 	int	valid;
@@ -21,6 +54,8 @@ void	valid_symbol_right(t_set *tmp, int i, int j)
 	valid = 0;
 	ii = i;
 	jj = j;
+	if (tmp->map[i][j] == tmp->play)
+		player_valid(tmp, i, j);
 	while (tmp->map[ii][jj] != '\0')
 	{
 		if (tmp->map[ii][jj] == '1')
@@ -45,6 +80,8 @@ void	valid_symbol_left(t_set *tmp, int i, int j)
 	valid = 0;
 	ii = i;
 	jj = j;
+	if (tmp->map[i][j] == tmp->play)
+		player_valid(tmp, i, j);
 	while (jj >= 0)
 	{
 		if (tmp->map[ii][jj] == '1')
@@ -69,6 +106,8 @@ void	valid_symbol_bottom(t_set *tmp, int i, int j)
 	valid = 0;
 	ii = i;
 	jj = j;
+	if (tmp->map[i][j] == tmp->play)
+		player_valid(tmp, i, j);
 	while (ii >= 0)
 	{
 		if (tmp->map[ii][jj] == '1')
@@ -93,6 +132,8 @@ void	valid_symbol_up(t_set *tmp, int i, int j)
 	ii = i;
 	jj = j;
 	valid = 0;
+	if (tmp->map[i][j] == tmp->play)
+		player_valid(tmp, i, j);
 	while (ii < tmp->map_w)
 	{
 		if (tmp->map[ii][jj] == '1')

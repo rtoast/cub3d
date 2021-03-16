@@ -6,7 +6,7 @@
 #    By: rtoast <rtoast@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/07 17:20:27 by kshanti           #+#    #+#              #
-#    Updated: 2021/03/13 17:44:00 by rtoast           ###   ########.fr        #
+#    Updated: 2021/03/16 02:19:16 by rtoast           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,10 +16,12 @@ HEAD = ./cub.h
 GNL = ./get_next_line/
 
 CFLAGS = -Wall -Wextra -Werror
+MLX = ./mlx/libmlx.a -framework OpenGL -framework Appkit
 
 C_FILE =	$(GNL)get_next_line.c $(GNL)get_next_line_utils.c\
 			main.c parser.c parser2.c parser3.c array_map.c\
-			additionally.c valid_symbol_map.c
+			additionally.c valid_symbol_map.c mlx_work.c ray.c\
+			key.c
 
 O_FILE = $(C_FILE:.c=.o)
 
@@ -28,7 +30,8 @@ all:
 
 $(NAME): $(O_FILE)
 	$(MAKE) -C ./libft all
-	gcc $(O_FILE) ./libft/libft.a -o $(NAME)
+	$(MAKE) -C ./mlx all
+	gcc $(O_FILE) ./libft/libft.a $(MLX) -o $(NAME)
 
 %.o: %.c $(HEAD)
 	gcc -c $(СFLAGS) $< -o $@
@@ -36,6 +39,7 @@ $(NAME): $(O_FILE)
 clean:
 	@rm -f $(O_FILE)
 	$(MAKE) -C ./libft clean
+	$(MAKE) -C ./mlx clean
 
 fclean: clean
 	@rm -f $(NAME)
