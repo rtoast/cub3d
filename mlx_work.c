@@ -6,7 +6,7 @@
 /*   By: rtoast <rtoast@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 23:23:13 by rtoast            #+#    #+#             */
-/*   Updated: 2021/03/16 02:36:14 by rtoast           ###   ########.fr       */
+/*   Updated: 2021/03/16 17:28:08 by rtoast           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ void	init(t_set *tmp)
 								&tmp->data.line, &tmp->data.end);
 	tmp->color_c = (tmp->cr << 16) + (tmp->cg << 8) + tmp->cb;
 	tmp->color_f = (tmp->fr << 16) + (tmp->fg << 8) + tmp->fb;
+	texture_init(tmp);
 	raycasting(tmp);
 }

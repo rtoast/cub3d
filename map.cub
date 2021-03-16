@@ -1,10 +1,11 @@
-NO ./path_to_the_north_textre
-SO ./path_to_the_south_texture
-WE ./path_to_the_west_texture
-S ./path_to_the_sprite_textur
-R   700 400
+NO ./2.xpm
+SO ./1.xpm
+WE ./rainbow.xpm
+S ./rainbow.xpm
+R   1000 800
 
-EA ./path_to_the_east_texture   
+
+EA ./wood
 
 F 120   ,120, 120
 
@@ -24,5 +25,5 @@ C 0,0,200
 101010101
 100000001
 100000001
-1000W0001
+1000E0001
 111111111

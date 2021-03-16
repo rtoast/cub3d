@@ -6,7 +6,7 @@
 /*   By: rtoast <rtoast@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 19:58:05 by kshanti           #+#    #+#             */
-/*   Updated: 2021/03/16 03:07:05 by rtoast           ###   ########.fr       */
+/*   Updated: 2021/03/16 16:33:26 by rtoast           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,20 @@ typedef struct	s_player
 {
 	double		posx;
 	double		posy;
-	double			dirx;
-	double			diry;
+	double		dirx;
+	double		diry;
 }				t_player;
+
+typedef struct	s_texture
+{
+	void		*img;
+	char		*adr;
+	int			w;
+	int			h;
+	int			bpp;
+	int			line;
+	int			end;
+}				t_texture;
 
 typedef struct	s_set
 {
@@ -72,6 +83,9 @@ typedef struct	s_set
 	double		deltadistx;
 	double		deltadisty;
 	double		perpwalldist;
+	double		wallx;
+	double		step;
+	double		tex_pos;
 	int			mapx;
 	int			mapy;
 	int			stepx;
@@ -81,10 +95,17 @@ typedef struct	s_set
 	int			lineheight;
 	int			drawstart;
 	int			drawend;
+	int			tex_x;
+	int			tex_y;
 	void		*mlx;
 	void		*win;
 	t_data		data;
 	t_player	player;
+	t_texture	tex_n;
+	t_texture	tex_s;
+	t_texture	tex_e;
+	t_texture	tex_w;
+	t_texture	tex_sp;
 }				t_set;
 
 int		pars_r(char *line, t_set *tmp);
@@ -113,5 +134,11 @@ void	filar(t_set *tmp, int x);
 int		my_exit(int key);
 int		keybord_manager(int key, t_set *tmp);
 void	raycasting(t_set *tmp);
+void	texture_init(t_set *tmp);
+void	texture_coordinate(t_set *tmp);
+int		get_color_we(t_set *tmp);
+int		get_color_ea(t_set *tmp);
+int		get_color_no(t_set *tmp);
+int		get_color_so(t_set *tmp);
 
 #endif
