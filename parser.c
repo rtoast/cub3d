@@ -6,7 +6,7 @@
 /*   By: rtoast <rtoast@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 21:10:00 by rtoast            #+#    #+#             */
-/*   Updated: 2021/03/13 18:48:25 by rtoast           ###   ########.fr       */
+/*   Updated: 2021/03/17 05:18:42 by rtoast           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ int	pars_r(char *line, t_set *tmp)
 			i++;
 		else
 			return (-1);
-	if (tmp->rx == 0 && tmp->ry == 0)
+	if (tmp->rx == 0 || tmp->ry == 0)
 		error("R parameters error");
-	return (1);
+	return (max_r(tmp));
 }
 
 int	valid_f(char *line, int *comma)

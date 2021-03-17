@@ -6,7 +6,7 @@
 /*   By: rtoast <rtoast@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 17:30:00 by rtoast            #+#    #+#             */
-/*   Updated: 2021/03/16 01:35:09 by rtoast           ###   ########.fr       */
+/*   Updated: 2021/03/17 02:32:11 by rtoast           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	player_valid(t_set *tmp, int i, int j)
 		tmp->planey = -0.66;
 	}
 }
+
 void	valid_symbol_right(t_set *tmp, int i, int j)
 {
 	int	valid;

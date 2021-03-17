@@ -6,7 +6,7 @@
 /*   By: rtoast <rtoast@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 23:59:55 by rtoast            #+#    #+#             */
-/*   Updated: 2021/03/16 19:12:59 by rtoast           ###   ########.fr       */
+/*   Updated: 2021/03/17 05:40:33 by rtoast           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,29 +27,33 @@ void	raycasting(t_set *tmp)
 		tmp->deltadistx = fabs(1 / tmp->raydirx);
 		tmp->deltadisty = fabs(1 / tmp->raydiry);
 		tmp->hit = 0;
-		if(tmp->raydirx < 0)
+		if (tmp->raydirx < 0)
 		{
 			tmp->stepx = -1;
-			tmp->sidedistx = (tmp->player.posx - tmp->mapx) * tmp->deltadistx;
+			tmp->sidedistx = (tmp->player.posx - tmp->mapx)
+										* tmp->deltadistx;
 		}
 		else
 		{
 			tmp->stepx = 1;
-			tmp->sidedistx = (tmp->mapx + 1.0 - tmp->player.posx) * tmp->deltadistx;
+			tmp->sidedistx = (tmp->mapx + 1.0 - tmp->player.posx)
+												* tmp->deltadistx;
 		}
-		if(tmp->raydiry < 0)
+		if (tmp->raydiry < 0)
 		{
 			tmp->stepy = -1;
-			tmp->sidedisty = (tmp->player.posy - tmp->mapy) * tmp->deltadisty;
+			tmp->sidedisty = (tmp->player.posy - tmp->mapy)
+											* tmp->deltadisty;
 		}
 		else
 		{
- 			tmp->stepy = 1;
-			tmp->sidedisty = (tmp->mapy + 1.0 - tmp->player.posy) * tmp->deltadisty;
+			tmp->stepy = 1;
+			tmp->sidedisty = (tmp->mapy + 1.0 - tmp->player.posy)
+												* tmp->deltadisty;
 		}
 		while (tmp->hit == 0)
 		{
-			if(tmp->sidedistx < tmp->sidedisty)
+			if (tmp->sidedistx < tmp->sidedisty)
 			{
 				tmp->sidedistx += tmp->deltadistx;
 				tmp->mapx += tmp->stepx;
@@ -67,26 +71,28 @@ void	raycasting(t_set *tmp)
 				else
 					tmp->side = 4;
 			}
-			if(tmp->map[tmp->mapy][tmp->mapx] == '1')
-			tmp->hit = 1;
+			if (tmp->map[tmp->mapy][tmp->mapx] == '1')
+				tmp->hit = 1;
 		}
-		if(tmp->side < 3)
+		if (tmp->side < 3)
 		{
-			tmp->perpwalldist = (tmp->mapx - tmp->player.posx + (1 - tmp->stepx) / 2) / tmp->raydirx;
+			tmp->perpwalldist = (tmp->mapx - tmp->player.posx +
+							(1 - tmp->stepx) / 2) / tmp->raydirx;
 			tmp->wallx = tmp->player.posy + tmp->perpwalldist * tmp->raydiry;
 		}
 		else
 		{
-			tmp->perpwalldist = (tmp->mapy - tmp->player.posy + (1 - tmp->stepy) / 2) / tmp->raydiry;
+			tmp->perpwalldist = (tmp->mapy - tmp->player.posy +
+							(1 - tmp->stepy) / 2) / tmp->raydiry;
 			tmp->wallx = tmp->player.posx + tmp->perpwalldist * tmp->raydirx;
 		}
 		tmp->wallx -= floor(tmp->wallx);
 		tmp->lineheight = (int)(tmp->ry / tmp->perpwalldist);
 		tmp->drawstart = ((tmp->lineheight * -1) / 2) + tmp->ry / 2;
-		if(tmp->drawstart < 0)
+		if (tmp->drawstart < 0)
 			tmp->drawstart = 0;
 		tmp->drawend = tmp->lineheight / 2 + tmp->ry / 2;
-		if(tmp->drawend >= tmp->ry)
+		if (tmp->drawend >= tmp->ry)
 			tmp->drawend = tmp->ry - 1;
 		texture_coordinate(tmp);
 		filar(tmp, x);

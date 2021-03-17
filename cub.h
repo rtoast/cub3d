@@ -6,7 +6,7 @@
 /*   By: rtoast <rtoast@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 19:58:05 by kshanti           #+#    #+#             */
-/*   Updated: 2021/03/16 16:33:26 by rtoast           ###   ########.fr       */
+/*   Updated: 2021/03/17 05:18:25 by rtoast           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 # include "errno.h"
 # include "math.h"
 # include "stdio.h" //убрать
+
+#define MAX_WIDTH 2560
+#define MAX_HEIGHT 1440
 
 typedef struct	s_data
 {
@@ -140,5 +143,7 @@ int		get_color_we(t_set *tmp);
 int		get_color_ea(t_set *tmp);
 int		get_color_no(t_set *tmp);
 int		get_color_so(t_set *tmp);
+void	valid_name(char *str);
+int		max_r(t_set *tmp);
 
 #endif

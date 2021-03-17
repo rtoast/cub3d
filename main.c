@@ -6,7 +6,7 @@
 /*   By: rtoast <rtoast@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 19:57:32 by kshanti           #+#    #+#             */
-/*   Updated: 2021/03/16 15:04:32 by rtoast           ###   ########.fr       */
+/*   Updated: 2021/03/17 02:09:54 by rtoast           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,16 +90,16 @@ void	settings(t_set *tmp, int *numgnl, char **line, int fd)
 		error("no map in file");
 }
 
-void	readfile(t_set *tmp)
+void	readfile(t_set *tmp, char *str)
 {
 	int		numgnl;
 	int		fd;
 	char	*line;
 	int		i;
 
-	numgnl = colstr("map.cub");
+	numgnl = colstr(str);
 	line = NULL;
-	fd = open("map.cub", O_RDONLY);
+	fd = open(str, O_RDONLY);
 	if (fd < 0)
 		error_system(errno);
 	settings(tmp, &numgnl, &line, fd);
@@ -116,13 +116,19 @@ void	readfile(t_set *tmp)
 	close(fd);
 	if (tmp->play == '0')
 		error("no player on the map");
-	array_map("map.cub", tmp, tmp->mapbegin);
+	array_map(str, tmp, tmp->mapbegin);
 }
 
-int		main(void)
+int		main(int argc, char **argv)
 {
 	t_set	*tmp;
+	char	*line;
 
+	line = argv[1];
+	if (argc == 2)
+		valid_name(line);
+	else
+		error("wrong number of arguments");
 	tmp = (t_set*)malloc(sizeof(t_set));
 	if (tmp == NULL)
 		error_system(errno);
@@ -131,7 +137,7 @@ int		main(void)
 	tmp->linemap = 1;
 	tmp->map_w = 1;
 	tmp->mapbegin = 0;
-	readfile(tmp);
+	readfile(tmp, line);
 	init(tmp);
 	mlx_hook(tmp->win, 2, 0, keybord_manager, tmp);
 	mlx_hook(tmp->win, 17, 0, my_exit, NULL);

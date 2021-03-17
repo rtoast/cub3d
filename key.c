@@ -6,7 +6,7 @@
 /*   By: rtoast <rtoast@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 02:17:39 by rtoast            #+#    #+#             */
-/*   Updated: 2021/03/16 03:09:08 by rtoast           ###   ########.fr       */
+/*   Updated: 2021/03/17 02:30:53 by rtoast           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ int		my_exit(int key)
 	return (1);
 }
 
-int					keybord_manager(int key, t_set *tmp)
+int		keybord_manager(int key, t_set *tmp)
 {
 	double old;
-	
+
 	if (key == 53)
 		exit(1);
-	if (key == 13)//w
+	if (key == 13)
 	{
 		if (ft_strchr("0WESN", tmp->map[(int)tmp->player.posy]
 			[(int)(tmp->player.posx + tmp->player.dirx * 0.1)]))
@@ -34,7 +34,7 @@ int					keybord_manager(int key, t_set *tmp)
 			tmp->player.posy += tmp->player.diry * 0.1;
 		raycasting(tmp);
 	}
-	if (key == 0)//a
+	if (key == 0)
 	{
 		if (ft_strchr("0WESN", tmp->map[(int)tmp->player.posy]
 			[(int)(tmp->player.posx + tmp->planex * 0.1)]))
@@ -44,7 +44,7 @@ int					keybord_manager(int key, t_set *tmp)
 			tmp->player.posy += tmp->planey * 0.1;
 		raycasting(tmp);
 	}
-	if (key == 1)//s
+	if (key == 1)
 	{
 		if (ft_strchr("0WESN", tmp->map[(int)tmp->player.posy]
 			[(int)(tmp->player.posx - tmp->player.dirx * 0.1)]))
@@ -54,7 +54,7 @@ int					keybord_manager(int key, t_set *tmp)
 			tmp->player.posy -= tmp->player.diry * 0.1;
 		raycasting(tmp);
 	}
-	if (key == 2)//d
+	if (key == 2)
 	{
 		if (ft_strchr("0WESN", tmp->map[(int)tmp->player.posy]
 			[(int)(tmp->player.posx - tmp->planex * 0.1)]))
@@ -64,7 +64,7 @@ int					keybord_manager(int key, t_set *tmp)
 			tmp->player.posy -= tmp->planey * 0.1;
 		raycasting(tmp);
 	}
-	if (key == 123)//<-
+	if (key == 123)
 	{
 		old = tmp->player.dirx;
 		tmp->player.dirx = tmp->player.dirx * cos(-0.05) -
@@ -76,7 +76,7 @@ int					keybord_manager(int key, t_set *tmp)
 		tmp->planey = old * sin(-0.05) + tmp->planey * cos(-0.05);
 		raycasting(tmp);
 	}
-	if (key == 124)//->
+	if (key == 124)
 	{
 		old = tmp->player.dirx;
 		tmp->player.dirx = tmp->player.dirx * cos(0.05) -
