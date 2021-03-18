@@ -6,7 +6,7 @@
 /*   By: rtoast <rtoast@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 19:58:05 by kshanti           #+#    #+#             */
-/*   Updated: 2021/03/17 05:18:25 by rtoast           ###   ########.fr       */
+/*   Updated: 2021/03/18 17:38:31 by rtoast           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,33 @@
 
 #define MAX_WIDTH 2560
 #define MAX_HEIGHT 1440
+
+typedef struct	s_sprite
+{
+	double		x;
+	double		y;
+	double		savetrans;
+	double		tx;
+	double		ty;
+	int			camerax;
+	int			sh;
+	int			sw;
+	int			dstartx;
+	int			dstarty;
+	int			dendx;
+	int			dendy;
+	int			texy;
+	int			texx;
+	int			red;
+	int			col_s;
+}				t_sprite;
+
+typedef struct	s_spr
+{
+	double		x;
+	double		y;
+	double		d;
+}				t_spr;
 
 typedef struct	s_data
 {
@@ -109,6 +136,7 @@ typedef struct	s_set
 	t_texture	tex_e;
 	t_texture	tex_w;
 	t_texture	tex_sp;
+	t_sprite	spr_t;
 }				t_set;
 
 int		pars_r(char *line, t_set *tmp);
@@ -145,5 +173,8 @@ int		get_color_no(t_set *tmp);
 int		get_color_so(t_set *tmp);
 void	valid_name(char *str);
 int		max_r(t_set *tmp);
+void	colnum_sprite(t_set *tmp);
+void	coordinate_sprite(t_set *tmp, t_spr spr[]);
+int		get_color_spr(t_set *tmp);
 
 #endif

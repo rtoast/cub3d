@@ -6,7 +6,7 @@
 /*   By: rtoast <rtoast@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 23:59:55 by rtoast            #+#    #+#             */
-/*   Updated: 2021/03/17 05:40:33 by rtoast           ###   ########.fr       */
+/*   Updated: 2021/03/18 17:48:38 by rtoast           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	raycasting(t_set *tmp)
 {
-	int	x;
+	int		x;
+	double	mass[tmp->rx];
 
 	x = -1;
 	while (++x < tmp->rx)
@@ -86,6 +87,7 @@ void	raycasting(t_set *tmp)
 							(1 - tmp->stepy) / 2) / tmp->raydiry;
 			tmp->wallx = tmp->player.posx + tmp->perpwalldist * tmp->raydirx;
 		}
+		mass[x] = tmp->perpwalldist;
 		tmp->wallx -= floor(tmp->wallx);
 		tmp->lineheight = (int)(tmp->ry / tmp->perpwalldist);
 		tmp->drawstart = ((tmp->lineheight * -1) / 2) + tmp->ry / 2;
@@ -97,6 +99,8 @@ void	raycasting(t_set *tmp)
 		texture_coordinate(tmp);
 		filar(tmp, x);
 	}
+	colnum_sprite(tmp);
+	sprite(tmp, mass);
 	mlx_put_image_to_window(tmp->mlx, tmp->win, tmp->data.img, 0, 0);
 }
 

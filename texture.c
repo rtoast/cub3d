@@ -6,7 +6,7 @@
 /*   By: rtoast <rtoast@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 14:15:11 by rtoast            #+#    #+#             */
-/*   Updated: 2021/03/17 05:39:48 by rtoast           ###   ########.fr       */
+/*   Updated: 2021/03/18 17:33:52 by rtoast           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,12 @@ void	texture_init(t_set *tmp)
 		error_system(errno);
 	tmp->tex_w.adr = mlx_get_data_addr(tmp->tex_w.img, &tmp->tex_w.bpp,
 								&tmp->tex_w.line, &tmp->tex_w.end);
+	tmp->tex_sp.img =  mlx_xpm_file_to_image(tmp->mlx,
+					tmp->s, &tmp->tex_sp.w, &tmp->tex_sp.h);
+	if (tmp->tex_sp.img == NULL)
+		error_system(errno);
+	tmp->tex_sp.adr = mlx_get_data_addr(tmp->tex_sp.img, &tmp->tex_sp.bpp,
+								&tmp->tex_sp.line, &tmp->tex_sp.end);
 }
 
 void	texture_coordinate(t_set *tmp)
@@ -127,5 +133,20 @@ int		get_color_so(t_set *tmp)
 		return (0);
 	icol = (*(int*)(tmp->tex_s.adr + ((tmp->tex_x + (tmp->tex_y * tmp->tex_s.w))
 													* (tmp->tex_s.bpp / 8))));
+	return (icol);
+}
+
+int		get_color_spr(t_set *tmp)
+{
+	int	icol;
+
+	tmp->spr_t.texx = abs(tmp->spr_t.texx);
+	tmp->spr_t.texy = abs(tmp->spr_t.texy);
+	if (!tmp->tex_sp.h || !tmp->tex_sp.w)
+		return (0);
+	if (tmp->spr_t.texx > tmp->tex_sp.w || tmp->spr_t.texy > tmp->tex_sp.h)
+		return (0);
+	icol = (*(int*)(tmp->tex_sp.adr + ((tmp->spr_t.texx + (tmp->spr_t.texy * tmp->tex_sp.w))
+													* (tmp->tex_sp.bpp / 8))));
 	return (icol);
 }
