@@ -6,7 +6,7 @@
 /*   By: rtoast <rtoast@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 18:36:56 by rtoast            #+#    #+#             */
-/*   Updated: 2021/03/13 18:39:49 by rtoast           ###   ########.fr       */
+/*   Updated: 2021/03/23 20:28:15 by rtoast           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	pars_s_(char *line, t_set *tmp)
 
 	i = 0;
 	symbol = 0;
+	if (line[0] == ' ')
+		error("wrong spase");
 	while (line[i] == 'S' || line[i] == ' ')
 	{
 		if (line[i] == 'S')
@@ -40,6 +42,8 @@ int	pars_ea(char *line, t_set *tmp)
 
 	i = 0;
 	symbol = 0;
+	if (line[0] == ' ')
+		error("wrong spase");
 	while (line[i] == 'E' || line[i] == ' ' || line[i] == 'A')
 	{
 		if (line[i] == 'E' || line[i] == 'A')
@@ -61,6 +65,8 @@ int	pars_we(char *line, t_set *tmp)
 
 	i = 0;
 	symbol = 0;
+	if (line[0] == ' ')
+		error("wrong spase");
 	while (line[i] == 'W' || line[i] == 'E' || line[i] == ' ')
 	{
 		if (line[i] == 'W' || line[i] == 'E')
@@ -77,6 +83,8 @@ int	pars_we(char *line, t_set *tmp)
 
 int	skip(int i, char *line, int what)
 {
+	if (line[0] == ' ')
+		error("wrong spase");
 	if (what == 1)
 		while (line[i] < '0' || line[i] > '9')
 			i++;

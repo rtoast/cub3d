@@ -6,7 +6,7 @@
 /*   By: rtoast <rtoast@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 19:58:05 by kshanti           #+#    #+#             */
-/*   Updated: 2021/03/18 17:38:31 by rtoast           ###   ########.fr       */
+/*   Updated: 2021/03/23 19:48:50 by rtoast           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,9 @@
 # include "fcntl.h"
 # include "errno.h"
 # include "math.h"
-# include "stdio.h" //убрать
 
-#define MAX_WIDTH 2560
-#define MAX_HEIGHT 1440
+# define MAX_WIDTH 2560
+# define MAX_HEIGHT 1440
 
 typedef struct	s_sprite
 {
@@ -41,6 +40,7 @@ typedef struct	s_sprite
 	int			texy;
 	int			texx;
 	int			red;
+	int			iy;
 	int			col_s;
 }				t_sprite;
 
@@ -127,6 +127,7 @@ typedef struct	s_set
 	int			drawend;
 	int			tex_x;
 	int			tex_y;
+	int			screen;
 	void		*mlx;
 	void		*win;
 	t_data		data;
@@ -139,42 +140,57 @@ typedef struct	s_set
 	t_sprite	spr_t;
 }				t_set;
 
-int		pars_r(char *line, t_set *tmp);
-int		pars_c(char *line, t_set *tmp);
-int		pars_f(char *line, t_set *tmp);
-int		skip(int i, char *line, int what);
-int		pars_no(char *line, t_set *tmp);
-int		pars_so(char *line, t_set *tmp);
-int		pars_we(char *line, t_set *tmp);
-int		pars_s_(char *line, t_set *tmp);
-int		pars_ea(char *line, t_set *tmp);
-void	array_map(char *str, t_set *tmp, int i);
-int		valid_symbol(char symbol);
-void	error(char *str);
-void	error_system(int i);
-int		strsearch(char *line, char *sought);
-int		pars_setting(char *line, t_set *tmp);
-void	valid_symbol_right(t_set *tmp, int i, int j);
-void	valid_symbol_left(t_set *tmp, int i, int j);
-void	valid_symbol_bottom(t_set *tmp, int i, int j);
-void	valid_symbol_up(t_set *tmp, int i, int j);
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
-void	init(t_set *tmp);
-void	player_valid(t_set *tmp, int i, int j);
-void	filar(t_set *tmp, int x);
-int		my_exit(int key);
-int		keybord_manager(int key, t_set *tmp);
-void	raycasting(t_set *tmp);
-void	texture_init(t_set *tmp);
-void	texture_coordinate(t_set *tmp);
-int		get_color_we(t_set *tmp);
-int		get_color_ea(t_set *tmp);
-int		get_color_no(t_set *tmp);
-int		get_color_so(t_set *tmp);
-void	valid_name(char *str);
-int		max_r(t_set *tmp);
-void	colnum_sprite(t_set *tmp);
-void	coordinate_sprite(t_set *tmp, t_spr spr[]);
-int		get_color_spr(t_set *tmp);
+int				pars_r(char *line, t_set *tmp);
+int				pars_c(char *line, t_set *tmp);
+int				pars_f(char *line, t_set *tmp);
+int				skip(int i, char *line, int what);
+int				pars_no(char *line, t_set *tmp);
+int				pars_so(char *line, t_set *tmp);
+int				pars_we(char *line, t_set *tmp);
+int				pars_s_(char *line, t_set *tmp);
+int				pars_ea(char *line, t_set *tmp);
+void			array_map(char *str, t_set *tmp, int i);
+int				valid_symbol(char symbol);
+void			error(char *str);
+void			error_system(int i);
+int				strsearch(char *line, char *sought);
+int				pars_setting(char *line, t_set *tmp);
+void			valid_symbol_right(t_set *tmp, int i, int j);
+void			valid_symbol_left(t_set *tmp, int i, int j);
+void			valid_symbol_bottom(t_set *tmp, int i, int j);
+void			valid_symbol_up(t_set *tmp, int i, int j);
+void			my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void			init(t_set *tmp);
+void			player_valid(t_set *tmp, int i, int j);
+void			filar(t_set *tmp, int x);
+int				my_exit(int key);
+int				keybord_manager(int key, t_set *tmp);
+void			raycasting(t_set *tmp);
+void			texture_init(t_set *tmp);
+void			texture_coordinate(t_set *tmp);
+int				get_color_we(t_set *tmp);
+int				get_color_ea(t_set *tmp);
+int				get_color_no(t_set *tmp);
+int				get_color_so(t_set *tmp);
+void			valid_name(char *str);
+int				max_r(t_set *tmp);
+void			colnum_sprite(t_set *tmp);
+void			coordinate_sprite(t_set *tmp, t_spr spr[]);
+int				get_color_spr(t_set *tmp);
+void			sprite(t_set *tmp, double mass[]);
+void			screen(t_set *tmp);
+void			valid_save(char *str, t_set *tmp);
+void			key1(int key, t_set *tmp);
+void			key2(int key, t_set *tmp);
+void			key3(int key, t_set *tmp);
+void			texture_init2(t_set *tmp);
+void			texture_coordinate2(t_set *tmp);
+void			p_valid(t_set *tmp, int i, int j);
+void			collor_w(t_set *tmp, int x, int icol);
+void			ie(t_set *tmp);
+void			ray_w(t_set *tmp);
+void			begin_ray(t_set *tmp);
+void			end_ray(t_set *tmp);
+void			init_tmp(t_set *tmp);
 
 #endif

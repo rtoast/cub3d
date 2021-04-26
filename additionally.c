@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   additionally.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rtoast <rtoast@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 19:50:22 by rtoast            #+#    #+#             */
-/*   Updated: 2021/03/13 18:13:10 by rtoast           ###   ########.fr       */
+/*   Updated: 2021/04/26 20:50:12 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 void	error_system(int i)
 {
-	perror("Error\n");
+	//perror("Error\n");
 	exit(i);
 }
 
 void	error(char *str)
 {
-	printf("Error\n%s\n", str);
+	//printf("Error\n%s\n", str);
 	exit(1);
 }
 
@@ -70,6 +70,7 @@ int		strsearch(char *line, char *sought)
 int		pars_setting(char *line, t_set *tmp)
 {
 	int		res;
+	char	*fr;
 
 	res = 2;
 	if (strsearch(line, "R ") == 1)
@@ -88,8 +89,6 @@ int		pars_setting(char *line, t_set *tmp)
 		res = pars_c(line, tmp);
 	if (strsearch(line, "F ") == 1)
 		res = pars_f(line, tmp);
-	if (line[0] == ' ')
-		line = ft_strtrim(line, " ");
 	if (line[0] == '\0')
 		res = 0;
 	return (res);

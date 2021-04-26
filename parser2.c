@@ -6,7 +6,7 @@
 /*   By: rtoast <rtoast@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 02:26:40 by kshanti           #+#    #+#             */
-/*   Updated: 2021/03/13 18:51:22 by rtoast           ###   ########.fr       */
+/*   Updated: 2021/03/23 20:27:54 by rtoast           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ int	pars_no(char *line, t_set *tmp)
 
 	i = 0;
 	symbol = 0;
+	if (line[0] == ' ')
+		error("wrong spase");
 	while (line[i] == 'N' || line[i] == 'O' || line[i] == ' ')
 	{
 		if (line[i] == 'N' || line[i] == 'O')
@@ -114,6 +116,8 @@ int	pars_so(char *line, t_set *tmp)
 
 	i = 0;
 	symbol = 0;
+	if (line[0] == ' ')
+		error("wrong spase");
 	while (line[i] == 'S' || line[i] == 'O' || line[i] == ' ')
 	{
 		if (line[i] == 'S' || line[i] == 'O')

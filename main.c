@@ -6,7 +6,7 @@
 /*   By: rtoast <rtoast@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 19:57:32 by kshanti           #+#    #+#             */
-/*   Updated: 2021/03/17 02:09:54 by rtoast           ###   ########.fr       */
+/*   Updated: 2021/03/23 20:09:23 by rtoast           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,17 @@ int		colstr(char *str)
 void	settings(t_set *tmp, int *numgnl, char **line, int fd)
 {
 	int		numset;
+	int		pars_id;
 
 	numset = 0;
 	while (numset <= 8 && *numgnl > 0)
 	{
 		if (get_next_line(fd, line) == -1)
 			error_system(errno);
-		if (pars_setting(*line, tmp) == 1)
+		pars_id = pars_setting(*line, tmp);
+		if (pars_id == 1)
 			numset++;
-		if (pars_setting(*line, tmp) == 2)
+		if (pars_id == 2)
 		{
 			if (numset != 8)
 				error("not all settings");
@@ -125,20 +127,22 @@ int		main(int argc, char **argv)
 	char	*line;
 
 	line = argv[1];
+	tmp = (t_set*)malloc(sizeof(t_set));
+	init_tmp(tmp);
 	if (argc == 2)
 		valid_name(line);
-	else
+	if (argc < 2 || argc > 3)
 		error("wrong number of arguments");
-	tmp = (t_set*)malloc(sizeof(t_set));
 	if (tmp == NULL)
 		error_system(errno);
-	tmp->play = '0';
-	tmp->map_l = 0;
-	tmp->linemap = 1;
-	tmp->map_w = 1;
-	tmp->mapbegin = 0;
 	readfile(tmp, line);
 	init(tmp);
+	if (argc == 3)
+	{
+		valid_name(line);
+		valid_save(argv[2], tmp);
+		screen(tmp);
+	}
 	mlx_hook(tmp->win, 2, 0, keybord_manager, tmp);
 	mlx_hook(tmp->win, 17, 0, my_exit, NULL);
 	mlx_loop(tmp->mlx);

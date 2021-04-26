@@ -6,7 +6,7 @@
 /*   By: rtoast <rtoast@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 02:17:39 by rtoast            #+#    #+#             */
-/*   Updated: 2021/03/17 02:30:53 by rtoast           ###   ########.fr       */
+/*   Updated: 2021/03/23 18:18:49 by rtoast           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,16 @@ int		keybord_manager(int key, t_set *tmp)
 
 	if (key == 53)
 		exit(1);
+	key1(key, tmp);
+	key2(key, tmp);
+	key3(key, tmp);
+	return (0);
+}
+
+void	key1(int key, t_set *tmp)
+{
+	double old;
+
 	if (key == 13)
 	{
 		if (ft_strchr("0WESN", tmp->map[(int)tmp->player.posy]
@@ -44,6 +54,12 @@ int		keybord_manager(int key, t_set *tmp)
 			tmp->player.posy += tmp->planey * 0.1;
 		raycasting(tmp);
 	}
+}
+
+void	key2(int key, t_set *tmp)
+{
+	double old;
+
 	if (key == 1)
 	{
 		if (ft_strchr("0WESN", tmp->map[(int)tmp->player.posy]
@@ -64,6 +80,12 @@ int		keybord_manager(int key, t_set *tmp)
 			tmp->player.posy -= tmp->planey * 0.1;
 		raycasting(tmp);
 	}
+}
+
+void	key3(int key, t_set *tmp)
+{
+	double old;
+
 	if (key == 123)
 	{
 		old = tmp->player.dirx;
@@ -87,5 +109,4 @@ int		keybord_manager(int key, t_set *tmp)
 		tmp->planey = old * sin(0.05) + tmp->planey * cos(0.05);
 		raycasting(tmp);
 	}
-	return (0);
 }

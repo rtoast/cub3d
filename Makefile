@@ -6,7 +6,7 @@
 #    By: rtoast <rtoast@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/07 17:20:27 by kshanti           #+#    #+#              #
-#    Updated: 2021/03/18 16:05:48 by rtoast           ###   ########.fr        #
+#    Updated: 2021/03/23 19:47:02 by rtoast           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ MLX = ./mlx/libmlx.a -framework OpenGL -framework Appkit
 C_FILE =	$(GNL)get_next_line.c $(GNL)get_next_line_utils.c\
 			main.c parser.c parser2.c parser3.c array_map.c\
 			additionally.c valid_symbol_map.c mlx_work.c ray.c\
-			key.c texture.c additionally_two.c sprite.c
+			key.c texture.c additionally_two.c sprite.c get_color.c\
+			ray2.c additionally_3.c
 
 O_FILE = $(C_FILE:.c=.o)
 
@@ -47,4 +48,7 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+norm:
+	norminette $(C_FILE)
+
+.PHONY: all clean fclean re norm

@@ -6,7 +6,7 @@
 /*   By: rtoast <rtoast@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 17:30:00 by rtoast            #+#    #+#             */
-/*   Updated: 2021/03/17 02:32:11 by rtoast           ###   ########.fr       */
+/*   Updated: 2021/03/23 18:19:18 by rtoast           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,7 @@ void	player_valid(t_set *tmp, int i, int j)
 		tmp->planex = -0.66;
 		tmp->planey = 0;
 	}
-	if (tmp->play == 'W')
-	{
-		tmp->player.diry = 0;
-		tmp->player.dirx = -1;
-		tmp->planex = 0;
-		tmp->planey = 0.66;
-	}
-	if (tmp->play == 'E')
-	{
-		tmp->player.diry = 0;
-		tmp->player.dirx = 1;
-		tmp->planex = 0;
-		tmp->planey = -0.66;
-	}
+	p_valid(tmp, i, j);
 }
 
 void	valid_symbol_right(t_set *tmp, int i, int j)
